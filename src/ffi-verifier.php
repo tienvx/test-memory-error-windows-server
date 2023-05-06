@@ -2,16 +2,16 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Symfony\Component\Process\Process;
+use TestMemoryErrorWindowsServer\Runner\ProcessRunner;
 
 $code = file_get_contents(__DIR__ . '/../bin/pact-ffi-headers/pact.h');
 $lib = __DIR__ . '/../bin/pact-ffi-lib/pact.dll';
 $dir = __DIR__ . '/../pacts';
 $publicPath =  __DIR__ . '/../public/';
 
-$process = new Process(['php', '-S', 'localhost:7202', '-t', $publicPath]);
-$process->start();
-$process->waitUntil(fn () => is_resource(fsockopen('localhost', 7202)));
+$process = new ProcessRunner('php', ['-S', 'localhost:7202', '-t', $publicPath]);
+$process->run();
+\sleep(1); // wait for server to start
 
 $ffi = FFI::cdef($code, $lib);
 

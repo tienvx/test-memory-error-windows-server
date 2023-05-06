@@ -8,9 +8,9 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        php: [ '8.0', '8.1', '8.2' ]
+        first: [ 'ffi', 'standalone' ]
 
-    name: PHP ${{ matrix.php }}
+    name: ${{ matrix.first }} first
 
     steps:
       - uses: actions/checkout@v3
@@ -20,10 +20,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           extensions: openssl, sockets, curl, zip, ffi
-          php-version: ${{ matrix.php }}
+          php-version: 8.2
 
       - name: Composer install
         uses: ramsey/composer-install@v2
 
       - name: Composer test
-        run: composer ffi-first
+        run: composer ${{ matrix.first }}-first
