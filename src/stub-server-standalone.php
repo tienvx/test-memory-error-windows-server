@@ -16,6 +16,8 @@ $process->waitUntil(function (string $type, string $output) {
     return false !== \strpos($output, 'HTTPServer#start');
 });
 
+sleep(10);
+
 echo file_get_contents("http://localhost:7201/{$endpoint}");
 
 $process->stop();
