@@ -9,8 +9,9 @@ jobs:
     strategy:
       matrix:
         php: [ '8.0', '8.1', '8.2' ]
+        first: [ 'ffi', 'standalone' ]
 
-    name: PHP ${{ matrix.php }}
+    name: PHP ${{ matrix.php }} ${{ matrix.first }} first
 
     steps:
       - uses: actions/checkout@v3
@@ -26,4 +27,4 @@ jobs:
         uses: ramsey/composer-install@v2
 
       - name: Composer test
-        run: composer ffi-first
+        run: composer ${{ matrix.first }}-first
